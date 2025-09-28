@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+
+check() {
+    command -v "$1" 1>/dev/null
+}
+
+notify() {
+    check notify-send && {
+        notify-send -a "Hyprsunset" "$@"
+        return
+    }
+    echo "$@"
+}
+
+if ! check hyprsunset; then
+    notify "hyprsunset not found"
+    exit 1
+fi
+
+current=$(pgrep -x hyprsunset | xargs)
+
+# current=$(pgrep -x hyprsunset)
+
+# Display status
+if [[ $1 == "status" ]]; then
+    if [[ -n $current ]]; then
+        cat <<-EOF
+    {"text": "󰮔", "tooltip": "Hyprsunset on"}
+EOF
+        printf "asfksdajlsjgl"
+    else
+        cat <<-EOF
+    {"text": "󰈉", "tooltip": "Hyprsunset off"}
+EOF
+        printf "15498456465498456465"
+    fi
+    exit
+fi
+
+if [[ -n $current ]]; then
+    killall hyprsunset
+else
+    hyprsunset -t 5700 &
+fi
+pkill -RTMIN+11 waybar

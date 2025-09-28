@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+check() {
+    command -v "$1" 1>/dev/null
+}
+
+check sensors || exit
+
+data="$(sensors k10temp-pci-00c3 | sed 's/+//g')"
+tempstr="$(echo "$data" | awk -e '/Tctl/ {print $2}')"
+
+tooltip="<b>Core Temp: $tempstr </b>\n"
+
+# "format-icons" : [ "", "", "", "", "" ] ,
+tempint=${tempstr%.*}
+temp="<b>${tempint}󰔄</b>"
+icon=""
+class="cool"
+[ "$tempint" -gt 50 ] && {
+    icon=""
+    class="normal"
+}
+[ "$tempint" -gt 70 ] && {
+    icon=" "
+    class="warm"
+}
+[ "$tempint" -gt 85 ] && {
+    icon=" "
+    class="warn"
+}
+[ "$tempint" -gt 95 ] && {
+    icon=" "
+    class="critical"
+}
+
+tooltip="${tooltip::-2}"
+cat <<EOF
+{"text":"$temp","tooltip":"$tooltip", "class": "$class"}
+EOF
