@@ -1,10 +1,11 @@
 {
+    "output": "HDMI-A-1",
   "layer": "top",
   "position": "left",
-  "margin": "5 2 5 0",
+  "margin": "8 0 8 0",
   "reload_style_on_change": true,
   "modules-left": [
-    "custom/updates",
+    // "custom/updates",
     "hyprland/workspaces",
     "hyprland/submap",
     "group/info"
@@ -98,7 +99,7 @@
     "group/sound",
     "group/connection",
     "group/together",
-    "group/cnoti",
+    // "group/cnoti",
     "tray",
     "group/power"
   ],
@@ -410,7 +411,7 @@
     "format": "{}",
     "tooltip": true,
     "interval": 3600,
-    "exec": "wttrbar --custom-indicator '{ICON}\n<b>{temp_C}</b>' --location do+vinh",
+    "exec": "wttrbar --custom-indicator '{ICON}\n<b>{temp_C}</b>' --location ho+chi+minh",
     "return-type": "json"
   },
   "custom/updates": {
