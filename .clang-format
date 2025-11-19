@@ -5,5 +5,5 @@ UseTab: Never
 BreakBeforeBraces: Attach
 AllowShortBlocksOnASingleLine: Never
 AllowShortIfStatementsOnASingleLine: Never
-ColumnLimit: 100
+ColumnLimit: 80
 
