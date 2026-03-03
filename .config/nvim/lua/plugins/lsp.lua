@@ -4,23 +4,30 @@ return {
         opts = function(_, opts)
             local lspconfig = require("lspconfig")
 
-            -- Add your servers here
             local servers = { "pyright", "clangd" }
 
-            -- Merge with LazyVim defaults
             for _, server in ipairs(servers) do
-                lspconfig[server].setup({
+                local server_opts = {
                     capabilities = opts.capabilities,
                     on_attach = function(client, bufnr)
-                        -- Preserve existing LazyVim keymaps
+                        -- Preserve LazyVim defaults
                         if opts.on_attach then
                             opts.on_attach(client, bufnr)
                         end
 
-                        -- Add rename keybinding
+                        -- Your custom keymap
                         vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { buffer = bufnr, desc = "LSP Rename" })
                     end,
-                })
+                }
+
+                if server == "clangd" then
+                    server_opts.cmd = {
+                        "clangd",
+                        "--fallback-style=none",
+                    }
+                end
+
+                lspconfig[server].setup(server_opts)
             end
         end,
     },

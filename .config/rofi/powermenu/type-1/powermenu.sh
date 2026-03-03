@@ -87,7 +87,7 @@ $reboot)
     run_cmd --reboot
     ;;
 $lock)
-    hyprlock
+    pidof hyprlock || hyprlock
     ;;
 $suspend)
     run_cmd --suspend
