@@ -15,6 +15,11 @@ return {
                             opts.on_attach(client, bufnr)
                         end
 
+                        -- Disable autoformat only for clangd
+                        if client.name == "clangd" then
+                            vim.g.autoformat = false
+                        end
+
                         -- Your custom keymap
                         vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { buffer = bufnr, desc = "LSP Rename" })
                     end,
